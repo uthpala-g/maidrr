@@ -162,7 +162,7 @@ autotune <- function(mfit, data, vars, target, max_ngrps = 15, hcut = 0.75, ignr
     # Calculate the validation errors
     Kfold_cross_valid(data = data_segm, target = target, nfolds = nfolds, glm_par = glm_par, err_fun = err_fun)
   }
-  doParallel::stopImplicitCluster()
+  # doParallel::stopImplicitCluster() # UG changed
 
   # Get the cross-validation error
   if (! ('matrix' %in% class(out_main) & nrow(lmbd_main) > 1)) out_main <- out_main %>% as.matrix() %>% t()
