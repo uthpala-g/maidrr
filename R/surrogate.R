@@ -47,8 +47,8 @@ surrogate <- function(data, par_list) {
         # Sort the levels alphabetically
         sorted_levels <- sort(levels)
         data[[var]] <- relevel(data[[var]], ref = sorted_levels[1]) # Set the first (alphabetically) level as the reference
-      }
-    }
+      }
+    }
     
     nlev <- sapply(vars_form, function(x) data %>% dplyr::pull(x) %>% unique() %>% length())
     if (any(nlev == 1)) {
