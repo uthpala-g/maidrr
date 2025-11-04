@@ -34,6 +34,15 @@
 #' }
 #' @export
 surrogate <- function(data, par_list) {
+  
+  if (!is.null(base_levels)) { #this condition is added by UG
+    for (v in intersect(names(data), names(base_levels))) {
+      if (is.factor(data[[v]]) || is.character(data[[v]])) {
+        # Keep all levels even if not present in this segment
+        data[[v]] <- factor(data[[v]], levels = base_levels[[v]])
+      }
+    }
+  }
 
   if(!is.null(par_list$formula)) {
     char_form <- deparse1(par_list$formula)
