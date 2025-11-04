@@ -1,4 +1,4 @@
-#' Surrogate GLM
+#' Surrogate GLM UG Edit
 #'
 #' Fit a surrogate generalized linear model (GLM) to the segmented data.
 #'
