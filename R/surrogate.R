@@ -43,10 +43,10 @@ surrogate <- function(data, par_list) {
     cat_vars <- sapply(data[vars_form], is.factor)
     for (var in vars_form[cat_vars]) {
       levels <- levels(data[[var]])
-      if (length(levels) > 1) {  # Only relevel if there are multiple levels
+      if (length(levels) > 1) { # Only relevel if there are multiple levels
         # Sort the levels alphabetically
         sorted_levels <- sort(levels)
-        data[[var]] <- relevel(data[[var]], ref = sorted_levels[1])  # Set the first (alphabetically) level as the reference
+        data[[var]] <- relevel(data[[var]], ref = sorted_levels[1]) # Set the first (alphabetically) level as the reference
       }
     }
     
