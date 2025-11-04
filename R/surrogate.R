@@ -40,7 +40,7 @@ surrogate <- function(data, par_list) {
     vars_form <- intersect(trimws(strsplit(gsub('.*~', '', char_form), ' [+] ')[[1]]), names(data))
 
     # UG Edits
-    cat_vars <- sapply(data[vars_form], is.factor)
+    cat_vars <- sapply(data[vars_form], is.factor)
     for (var in vars_form[cat_vars]) {
       levels <- levels(data[[var]])
       if (length(levels) > 1) { # Only relevel if there are multiple levels
