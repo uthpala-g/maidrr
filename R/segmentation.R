@@ -58,8 +58,8 @@ segmentation <- function(fx_vars, data, type, values, max_ngrps = 15) {
     fx_grp <- fx_var %>% group_pd(ngroups = n_grps)
 
     #UG Edits
-    if (nrow(n_grps) == 0) {
-      stop(paste("n_grps is empty for variable:", var))
+    if (length(n_grps) == 0 || is.na(n_grps) || n_grps < 1) {
+      message(paste("⚠️ n_grps is invalid for variable:", var))
     }
 
     data <- data %>% dplyr::left_join(fx_grp[c(paste0('x', if (grepl('_', var)) 1:2), 'xgrp')],
