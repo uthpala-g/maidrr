@@ -53,17 +53,10 @@ segmentation <- function(fx_vars, data, type, values, max_ngrps = 15) {
     fx_var <- fx_vars[[i]]
     var <- fx_var %>% comment
 
-  #UG Edits
-    if (length(as.character(comment(fx_var))) != 1) stop(paste("fx_var comment must be a single string, got:", paste(as.character(comment(fx_var)), collapse = ",")))
-    
+     
     n_grps <- switch(type,
                      'ngroups' = values[var],
                      'lambdas' = fx_var %>% optimal_ngroups(lambda = values[var], search_grid = seq_len(min(length(unique(fx_var$y)), max_ngrps))))
-
-    #UG Edits
-    if (length(n_grps) == 0 || is.na(n_grps) || n_grps < 1) {
-      stop(paste("n_grps is invalid for variable:", var))
-    }
 
     fx_grp <- fx_var %>% group_pd(ngroups = n_grps)
 
