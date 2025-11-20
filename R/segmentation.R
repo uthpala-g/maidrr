@@ -52,6 +52,10 @@ segmentation <- function(fx_vars, data, type, values, max_ngrps = 15) {
   for (i in seq_len(length(fx_vars))) {
     fx_var <- fx_vars[[i]]
     var <- fx_var %>% comment
+
+  #UG Edits
+    if (length(as.character(comment(fx_var))) != 1) stop(paste("fx_var comment must be a single string, got:", paste(as.character(comment(fx_var)), collapse = ",")))
+    
     n_grps <- switch(type,
                      'ngroups' = values[var],
                      'lambdas' = fx_var %>% optimal_ngroups(lambda = values[var], search_grid = seq_len(min(length(unique(fx_var$y)), max_ngrps))))
