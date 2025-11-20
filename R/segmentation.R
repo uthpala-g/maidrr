@@ -57,6 +57,11 @@ segmentation <- function(fx_vars, data, type, values, max_ngrps = 15) {
                      'lambdas' = fx_var %>% optimal_ngroups(lambda = values[var], search_grid = seq_len(min(length(unique(fx_var$y)), max_ngrps))))
     fx_grp <- fx_var %>% group_pd(ngroups = n_grps)
 
+    #UG Edits
+    if (nrow(fx_grp) == 0) {
+      stop(paste("fx_grp is empty for variable:", var))
+    }
+
     data <- data %>% dplyr::left_join(fx_grp[c(paste0('x', if (grepl('_', var)) 1:2), 'xgrp')],
                                       by = setNames(paste0('x', if (grepl('_', var)) 1:2), unlist(strsplit(var, '_')))) %>%
       dplyr::mutate(xgrp = relevel(as.factor(xgrp), ref =  as.character((fx_grp %>% dplyr::arrange(-wgrp) %>% dplyr::pull(xgrp))[1]))) %>%
