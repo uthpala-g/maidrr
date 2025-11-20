@@ -55,13 +55,16 @@ segmentation <- function(fx_vars, data, type, values, max_ngrps = 15) {
     n_grps <- switch(type,
                      'ngroups' = values[var],
                      'lambdas' = fx_var %>% optimal_ngroups(lambda = values[var], search_grid = seq_len(min(length(unique(fx_var$y)), max_ngrps))))
-    fx_grp <- fx_var %>% group_pd(ngroups = n_grps)
 
     #UG Edits
     if (length(n_grps) == 0 || is.na(n_grps) || n_grps < 1) {
       message(paste("⚠️ n_grps is invalid for variable:", var))
+      next
     }
 
+    fx_grp <- fx_var %>% group_pd(ngroups = n_grps)
+
+    
     data <- data %>% dplyr::left_join(fx_grp[c(paste0('x', if (grepl('_', var)) 1:2), 'xgrp')],
                                       by = setNames(paste0('x', if (grepl('_', var)) 1:2), unlist(strsplit(var, '_')))) %>%
       dplyr::mutate(xgrp = relevel(as.factor(xgrp), ref =  as.character((fx_grp %>% dplyr::arrange(-wgrp) %>% dplyr::pull(xgrp))[1]))) %>%
