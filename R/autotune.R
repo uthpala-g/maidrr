@@ -159,6 +159,11 @@ autotune <- function(mfit, data, vars, target, max_ngrps = 15, hcut = 0.75, ignr
     # Segmentation for current lambda values
     data_segm <- maidrr::segmentation(fx_vars = fx_main, data = data, type = 'ngroups',
                                       values =  unlist(dplyr::select(dplyr::slice(lmbd_main, l), vars), use.names = TRUE))
+
+    if (is.null(data_segm) || nrow(data_segm) == 0) {
+      stop(paste("Segmentation returned empty data for row", l, "of lmbd_main"))
+    }
+
     # Calculate the validation errors
     Kfold_cross_valid(data = data_segm, target = target, nfolds = nfolds, glm_par = glm_par, err_fun = err_fun)
   }
