@@ -58,8 +58,7 @@ segmentation <- function(fx_vars, data, type, values, max_ngrps = 15) {
 
     #UG Edits
     if (length(n_grps) == 0 || is.na(n_grps) || n_grps < 1) {
-      message(paste("⚠️ n_grps is invalid for variable:", var))
-      next
+      stop(paste("n_grps is invalid for variable:", var))
     }
 
     fx_grp <- fx_var %>% group_pd(ngroups = n_grps)
